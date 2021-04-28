@@ -11,9 +11,10 @@ type UserController struct {
 	*revel.Controller
 }
 
-func (c UserController) GetUserById(id string) revel.Result {
-	var user = Model.GetName(id)
+var User = Model.User{}
 
+func (c UserController) GetUserById(id string) revel.Result {
+	user := User.GetName(id)
 	response := Response.JsonResponse{}
 	if user != "" {
 		response.Status = true
@@ -31,15 +32,16 @@ func (c UserController) AddUser () revel.Result {
 	c.Params.BindJSON(&paramMap)
 
 	fmt.Println("Controller ? New User! > id : " + paramMap["id"] + " / name : " + paramMap["name"])
-	Model.AddUser(paramMap["id"], paramMap["name"])
+	User.AddUser(paramMap["id"], paramMap["name"])
 
 	result := Response.JsonResponse{}
 	result.Status = true
+	defer fmt.Println(result)
 	return c.RenderJSON(result)
 }
 
 func (c UserController) GetUserList (rang int) revel.Result {
-	List := Model.GetUserList(rang)
+	List := User.GetUserList(rang)
 	response := Response.JsonResponse{}
 	if List != nil {
 		response.Status = true

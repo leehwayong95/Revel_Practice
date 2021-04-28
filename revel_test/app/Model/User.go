@@ -9,7 +9,7 @@ type User struct {
 
 var UserList = []User {{"123","456"},{"456","789"}}
 
-func GetName (id string) string {
+func (u *User) GetName (id string) string {
 	length := len(UserList)
 	for i := 0 ; i < length ; i++ {
 		if UserList[i].Id == id {
@@ -19,12 +19,12 @@ func GetName (id string) string {
 	return ""
 }
 
-func AddUser (id string, name string) {
+func (u *User) AddUser (id string, name string) {
 	fmt.Println("Model ? New User! > id : " + id + " / name : " + name)
 	UserList = append(UserList, User{id, name})
 }
 
-func GetUserList (rang int) []User{
+func (u *User) GetUserList (rang int) []User{
 	if rang == 0 {
 		return UserList
 	} else {
